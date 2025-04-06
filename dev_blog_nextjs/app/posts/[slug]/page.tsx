@@ -6,6 +6,7 @@ import { defineQuery, PortableText } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BiCaretLeft } from "react-icons/bi";
 
 const POST_QUERY = defineQuery(`*[
     _type == "post" &&
@@ -34,56 +35,52 @@ export default async function PostPage({
   }
   const {
     title,
-    date,
+    publishedAt,
     image,
     body,
-    postType,
   } = post;
   const postImageUrl = image
     ? urlFor(image)?.width(550).height(310).url()
     : null;
-  const postDate = new Date(date).toDateString();
-  const postTime = new Date(date).toLocaleTimeString();
+  const postDate = new Date(publishedAt).toDateString();
 
   return (
-    <main className="container mx-auto grid gap-12 p-12">
-      <div className="mb-4">
-        <Link href="/">← Back to desktop</Link>
+    <main className="p-5 bg-primary-1">
+
+      <div className="flex flex-row font-handjet text-xl items-center mb-5">
+        <BiCaretLeft />
+        <Link href="/" className="hover:underline\">Back to desktop</Link>
       </div>
-      <div className="grid items-top gap-12 sm:grid-cols-2">
-        <Image
-          src={postImageUrl || "https://placehold.co/550x310/png"}
-          alt={title || "Post"}
-          className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
-          height="310"
-          width="550"
-        />
-        <div className="flex flex-col justify-center space-y-4">
-          <div className="space-y-4">
-            {postType ? (
-              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800 capitalize">
-              </div>
-            ) : null}
-            {title ? (
-              <h1 className="text-4xl font-bold tracking-tighter mb-8">
-                {title}
-              </h1>
-            ) : null}
-            <dl className="grid grid-cols-2 gap-1 text-sm font-medium sm:gap-2 lg:text-base">
-              <dd className="font-semibold">Date</dd>
-              <div>
-                {postDate && <dt>{postDate}</dt>}
-                {postTime && <dt>{postTime}</dt>}
-              </div>
-            </dl>
-          </div>
-          {body && body.length > 0 && (
-            <div className="prose max-w-none">
-              <PortableText value={body} />
-            </div>
-          )}
+
+      {/* Title */}
+      <div>
+        <div className="flex justify-self-end">
+          {title ? (
+            <h1 className="text-4xl font-semibold font-handjet mb-2">
+              {title}
+            </h1>
+          ) : null}
+      </div>
+
+      <div className="my-5 p-2 rounded-lg border-1 border-white bg-t-white">
+        {/* Timestamp */}
+        <div className="flex text-lg font-handjet justify-self-end">
+            {postDate && <div>{postDate}</div>}
         </div>
+
+        {/* Divider */}
+        <div className="m-2 h-[1px] bg-primary-2" />
+
+        {/* Body */}
+        
+        {body && body.length > 0 && (
+        <div className="prose max-w-none">
+          <PortableText value={body} />
+        </div>
+        )}
       </div>
+    </div>
+
     </main>
   );
 }
