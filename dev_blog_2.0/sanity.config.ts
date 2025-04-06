@@ -4,6 +4,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import { defaultDocumentNode } from './structure/defaultDocumentNode'
+import { vercelDeployTool } from 'sanity-plugin-vercel-deploy'
 
 export default defineConfig({
   name: 'default',
@@ -16,7 +17,7 @@ export default defineConfig({
     structure,
     defaultDocumentNode
   }), 
-  visionTool()],
+  visionTool(), vercelDeployTool()],
 
   schema: {
     types: schemaTypes,
