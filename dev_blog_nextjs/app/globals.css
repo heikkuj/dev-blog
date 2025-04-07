@@ -1,2 +1,16 @@
 @import "tailwindcss";
 
+@theme {
+    --color-primary-1: rgba(223, 232, 255, 1);
+    --color-primary-2: rgba(63, 98, 222, 1);
+    --color-primary-3: rgba(133, 160, 255, 1);
+    --color-primary-4: ;
+
+    --color-t-white: rgba(255, 255, 255, 0.55);
+
+    --font-handjet: "Handjet", sans-serif;
+}
+
+body {
+    background-color: rgba(223, 232, 255, 1);
+}
