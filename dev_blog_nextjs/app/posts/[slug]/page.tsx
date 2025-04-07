@@ -1,9 +1,8 @@
-import { client } from "@/sanity/client";
+// import { client } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/live";
-import imageUrlBuilder from "@sanity/image-url";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+// import imageUrlBuilder from "@sanity/image-url";
+// import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { defineQuery, PortableText } from "next-sanity";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BiCaretLeft } from "react-icons/bi";
@@ -15,11 +14,11 @@ const POST_QUERY = defineQuery(`*[
   ...,
   "date": coalesce(date, now())}`);
 
-const { projectId, dataset } = client.config();
-const urlFor = (source: SanityImageSource) =>
-  projectId && dataset
-    ? imageUrlBuilder({ projectId, dataset }).image(source)
-    : null;
+// const { projectId, dataset } = client.config();
+// const urlFor = (source: SanityImageSource) =>
+//   projectId && dataset
+//     ? imageUrlBuilder({ projectId, dataset }).image(source)
+//     : null;
 
 export default async function PostPage({
   params,
@@ -36,12 +35,8 @@ export default async function PostPage({
   const {
     title,
     publishedAt,
-    image,
     body,
   } = post;
-  const postImageUrl = image
-    ? urlFor(image)?.width(550).height(310).url()
-    : null;
   const postDate = new Date(publishedAt).toDateString();
 
   return (
