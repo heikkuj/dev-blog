@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { defineQuery, PortableText } from "next-sanity";
+import { defineQuery, PortableText, PortableTextBlock } from "next-sanity";
 import { sanityFetch } from "@/sanity/live";
-import { client } from "@/sanity/client";
+// import { client } from "@/sanity/client";
 import ShortForm from "@/components/shortform";
 
 const POSTS_QUERY_LONG = defineQuery(`*[
@@ -9,6 +9,14 @@ const POSTS_QUERY_LONG = defineQuery(`*[
   && defined(slug.current)
   && format match "long-format"
 ]{_id, title, slug, publishedAt, body}|order(date desc)`);
+
+interface Post {
+    _id: string;
+    title: string;
+    slug: { current: string };
+    publishedAt: string;
+    body: PortableTextBlock;
+}
 
 export default async function Home() {
   const { data: posts } = await sanityFetch({ query: POSTS_QUERY_LONG });
@@ -33,7 +41,7 @@ export default async function Home() {
       <h1 className="text-5xl font-semibold place-self-start font-handjet text-primary-2">Posts</h1>
 
       <div className="flex flex-col gap-12 w-[90vw]">
-        {posts.map((post: any) => (
+        {posts.map((post: Post) => (
           <div className="bg-white p-4 rounded-lg" key={post._id}>
 
             <Link
@@ -46,7 +54,7 @@ export default async function Home() {
                 </p>
               )}
             </Link>
-            {post.body && post.body.length > 0 && (
+            {post.body && (
             <div className="prose max-w-none">
               <PortableText value={post.body} />
             </div>

@@ -1,7 +1,7 @@
-import Link from "next/link";
+// import Link from "next/link";
 import { defineQuery, PortableText } from "next-sanity";
 import { sanityFetch } from "@/sanity/live";
-import { client } from "@/sanity/client";
+// import { client } from "@/sanity/client";
 
 const POSTS_QUERY_SHORT = defineQuery(`*[
   _type == "post"
